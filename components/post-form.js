@@ -1,9 +1,9 @@
 "use client";
-import { useActionState } from "react";
 import FormSubmit from "./form-submit";
+import { useFormState } from "react-dom";
 
-export default function PostFrom({action}) {
-  const [state, formAction] = useActionState(action, {});
+export default function PostFrom({ action }) {
+  const [state, formAction] = useFormState(action, {});
 
   return (
     <>
@@ -14,7 +14,7 @@ export default function PostFrom({action}) {
           <input type="text" id="title" name="title" />
         </p>
         <p className="form-control">
-          <label htmlFor="image">Image URL</label>
+          <label htmlFor="image">Image</label>
           <input
             type="file"
             accept="image/png, image/jpeg"
@@ -29,6 +29,13 @@ export default function PostFrom({action}) {
         <p className="form-actions">
           <FormSubmit />
         </p>
+        {state.errors && (
+          <ul className="form-errors">
+            {state.errors.map((error) => (
+              <li key={error}>{error}</li>
+            ))}
+          </ul>
+        )}
       </form>
     </>
   );
